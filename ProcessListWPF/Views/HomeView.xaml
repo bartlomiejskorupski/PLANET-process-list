@@ -7,8 +7,38 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="White">
-        <TextBlock Text="{Binding DebugText}"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/> 
+        </Grid.ColumnDefinitions>
+        
+        <Menu x:Name="Menu"
+              Background="White"
+              BorderThickness="0, 0, 0, 2"
+              BorderBrush="#eee">
+            <Menu.Resources>
+                <Style TargetType="{x:Type MenuItem}">
+                    <Setter Property="Padding" Value="6, 2"/>
+                </Style>
+            </Menu.Resources>
+            <MenuItem Header="File" AllowDrop="True">
+                <MenuItem Header="Exit"/>
+            </MenuItem>
+            <MenuItem Header="Options" AllowDrop="True">
+                <MenuItem/>
+            </MenuItem>
+            <MenuItem Header="View" AllowDrop="True">
+                <MenuItem/>
+            </MenuItem>
+        </Menu>
+        <DataGrid x:Name="ProcessGrid"
+                  Grid.Row="1" 
+                  ItemsSource="{Binding ProcessList}"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  CanUserReorderColumns="False"/>
     </Grid>
 </UserControl>
