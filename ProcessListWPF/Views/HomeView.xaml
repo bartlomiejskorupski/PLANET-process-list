@@ -25,13 +25,13 @@
                 </Style>
             </Menu.Resources>
             <MenuItem Header="File" AllowDrop="True">
-                <MenuItem Header="Exit"/>
+                <MenuItem Header="Exit" Command="{Binding ExitCommand}"/>
             </MenuItem>
             <MenuItem Header="Options" AllowDrop="True">
                 <MenuItem/>
             </MenuItem>
             <MenuItem Header="View" AllowDrop="True">
-                <MenuItem/>
+                <MenuItem Header="Refresh" Command="{Binding RefreshCommand}"/>
             </MenuItem>
         </Menu>
         <DataGrid x:Name="ProcessGrid"

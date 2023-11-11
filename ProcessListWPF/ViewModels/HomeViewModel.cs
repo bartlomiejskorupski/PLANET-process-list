@@ -1,20 +1,42 @@
-﻿using System.Collections.ObjectModel;
+﻿using ProcessListWPF.Commands;
+using System;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace ProcessListWPF.ViewModels;
 
 public class HomeViewModel : ViewModelBase
 {
-    public ObservableCollection<ProcessViewModel> ProcessList { get; set; }
+    public ObservableCollection<ProcessViewModel> ProcessList { get; }
+    public ICommand ExitCommand { get; }
+    public ICommand RefreshCommand { get; }
+    private readonly DispatcherTimer _refreshTimer;
 
     public HomeViewModel()
     {
-        ProcessList = new ObservableCollection<ProcessViewModel>()
-        {
-            new ProcessViewModel() {Id = 1, Name = "Process 1", Description = "Process description", Type = "USER"},
-            new ProcessViewModel() {Id = 2, Name = "Process 2", Description = "Process description", Type = "USER"},
-            new ProcessViewModel() {Id = 3, Name = "Process 3", Description = "Process description", Type = "SYSTEM"},
-            new ProcessViewModel() {Id = 4, Name = "Process 4", Description = "Process description", Type = "SYSTEM"},
-        };
+        ProcessList = new ObservableCollection<ProcessViewModel>();
+
+        ExitCommand = new RelayCommand(_ => { Application.Current.Shutdown(); });
+        RefreshCommand = new RelayCommand(RefreshProcessList);
+
+        RefreshProcessList();
+        _refreshTimer = new DispatcherTimer();
+        _refreshTimer.Interval = TimeSpan.FromSeconds(1);
+        _refreshTimer.Tick += (_, _) => RefreshProcessList();
+        _refreshTimer.Start();
+    }
+
+    public void RefreshProcessList(object? parameter = null)
+    {
+        ProcessList.Clear();
+        var processes = Process.GetProcesses();
+        foreach (var process in processes)
+        { 
+            ProcessList.Add(new ProcessViewModel(process));
+        }
     }
 
 }
