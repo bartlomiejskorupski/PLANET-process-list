@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ProcessListWPF.Services;
 using ProcessListWPF.ViewModels;
 using ProcessListWPF.Views;
 using System.Windows;
@@ -19,17 +20,21 @@ public partial class App : Application
 
     private void ConfigureApplicationServices(HostBuilderContext context, IServiceCollection services)
     {
+        services.AddSingleton<IRefreshService, RefreshService>();
+
         services.AddTransient<MainViewModel>();
         services.AddTransient<HomeViewModel>();
+        services.AddTransient<MenuViewModel>();
 
-        services.AddSingleton<MainWindow>(service => new MainWindow()
+        services.AddSingleton(s => new MainWindow()
         {
-            DataContext = service.GetRequiredService<MainViewModel>()
+            DataContext = s.GetRequiredService<MainViewModel>()
         });
-        services.AddSingleton<HomeView>(service => new HomeView()
+        services.AddSingleton(s => new MenuView()
         {
-            DataContext = service.GetRequiredService<HomeViewModel>()
+            DataContext = s.GetRequiredService<MenuViewModel>()
         });
+        services.AddSingleton<HomeView>();
     }
 
     protected override async void OnStartup(StartupEventArgs e)

@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="ProcessListWPF.Views.MenuView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ProcessListWPF.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="25" d:DesignWidth="200">
+    <Menu x:Name="Menu"
+      Background="White"
+      BorderThickness="0, 0, 0, 2"
+      BorderBrush="#eee">
+        <Menu.Resources>
+            <Style TargetType="{x:Type MenuItem}">
+                <Setter Property="Padding" Value="6, 2"/>
+            </Style>
+        </Menu.Resources>
+        <MenuItem Header="File" AllowDrop="True">
+            <MenuItem Header="Exit" Command="{Binding ExitCommand}"/>
+        </MenuItem>
+        <MenuItem Header="Options" AllowDrop="True">
+            <MenuItem/>
+        </MenuItem>
+        <MenuItem Header="View" AllowDrop="True">
+            <MenuItem Header="Refresh Now" Command="{Binding RefreshCommand}"/>
+            <MenuItem Header="Refresh Speed" AllowDrop="True">
+                <MenuItem Header="Fast" 
+                      Command="{Binding RefreshFastCommand}"
+                      IsChecked="{Binding IsRefreshFast}"/>
+                <MenuItem Header="Normal"
+                      Command="{Binding RefreshNormalCommand}"
+                      IsChecked="{Binding IsRefreshNormal}"/>
+                <MenuItem Header="Slow"
+                      Command="{Binding RefreshSlowCommand}"
+                      IsChecked="{Binding IsRefreshSlow}"/>
+            </MenuItem>
+            <MenuItem Header="Refresh Paused" 
+                  Command="{Binding RefreshPausedCommand}"
+                  IsChecked="{Binding IsRefreshPaused}"/>
+        </MenuItem>
+    </Menu>
+</UserControl>

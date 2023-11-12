@@ -1,4 +1,5 @@
-﻿using ProcessListWPF.ViewModels;
+﻿using Microsoft.Extensions.DependencyInjection;
+using ProcessListWPF.ViewModels;
 using System.Windows.Controls;
 
 
@@ -9,6 +10,7 @@ public partial class HomeView : UserControl
     public HomeView()
     {
         InitializeComponent();
+        MenuContentControl.Content = App.AppHost!.Services.GetRequiredService<MenuView>();
     }
 
 }
