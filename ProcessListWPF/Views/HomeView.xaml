@@ -31,7 +31,21 @@
                 <MenuItem/>
             </MenuItem>
             <MenuItem Header="View" AllowDrop="True">
-                <MenuItem Header="Refresh" Command="{Binding RefreshCommand}"/>
+                <MenuItem Header="Refresh Now" Command="{Binding RefreshCommand}"/>
+                <MenuItem Header="Refresh Speed" AllowDrop="True">
+                    <MenuItem Header="Fast" 
+                              Command="{Binding RefreshFastCommand}"
+                              IsChecked="{Binding IsRefreshFast}"/>
+                    <MenuItem Header="Normal"
+                              Command="{Binding RefreshNormalCommand}"
+                              IsChecked="{Binding IsRefreshNormal}"/>
+                    <MenuItem Header="Slow"
+                              Command="{Binding RefreshSlowCommand}"
+                              IsChecked="{Binding IsRefreshSlow}"/>
+                </MenuItem>
+                <MenuItem Header="Refresh Paused" 
+                          Command="{Binding RefreshPausedCommand}"
+                          IsChecked="{Binding IsRefreshPaused}"/>
             </MenuItem>
         </Menu>
         <DataGrid x:Name="ProcessGrid"
