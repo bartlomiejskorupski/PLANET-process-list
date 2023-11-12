@@ -28,7 +28,8 @@
                   CanUserReorderColumns="False"
                   IsReadOnly="True"
                   AutoGenerateColumns="False"
-                  SelectionMode="Single">
+                  SelectionMode="Single"
+                  SelectedItem="{Binding SelectedItem}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
