@@ -27,6 +27,7 @@ public partial class App : Application
         services.AddTransient<MainViewModel>();
         services.AddTransient<HomeViewModel>();
         services.AddTransient<MenuViewModel>();
+        services.AddTransient<DetailsViewModel>();
 
         services.AddSingleton(s => new MainWindow()
         {

@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="ProcessListWPF.Views.DetailsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ProcessListWPF.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="300">
+    <Grid Background="White"
+          Visibility="{Binding Visibility}"
+          MinWidth="200">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Margin="10">
+            <TextBlock Text="Process Details" FontSize="20" TextAlignment="Center"/>
+            <TextBlock Text="Name"/>
+            <TextBlock Text="{Binding Name}"/>
+            <TextBlock Text="ID"/>
+            <TextBlock Text="{Binding Id}"/>
+            <TextBlock Text="Start Time"/>
+            <TextBlock Text="{Binding StartTime}"/>
+        </StackPanel>
+
+        <ListView Grid.Row="1">
+            
+        </ListView>
+    </Grid>
+</UserControl>

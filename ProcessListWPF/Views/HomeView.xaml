@@ -48,42 +48,61 @@
             </DataGrid.Columns>
         </DataGrid>-->
 
-        <ListView x:Name="ProcessListView"
-                  Grid.Row="1"
-                  Grid.Column="0"
-                  ItemsSource="{Binding ProcessList}"
-                  SelectionMode="Single"
-                  SelectedItem="{Binding SelectedItem}">
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                </Style>
-            </ListView.ItemContainerStyle>
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Width="200">
-                        <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="Name" Click="ListViewColumnHeaderClick" >Name</GridViewColumnHeader>
-                        </GridViewColumn.Header>
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Width="100">
-                        <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="Memory" Click="ListViewColumnHeaderClick" >Memory</GridViewColumnHeader>
-                        </GridViewColumn.Header>
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding MemoryFormatted}" TextAlignment="Right" HorizontalAlignment="Stretch"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <Grid Grid.Row="1"
+              Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <GridSplitter Grid.Column="1"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Stretch"
+                          Width="5"
+                          Visibility="{Binding DetailsVisibility}"/>
+            
+            <ListView x:Name="ProcessListView"
+                      Grid.Column="0"
+                      ItemsSource="{Binding ProcessList}"
+                      SelectionMode="Single"
+                      SelectedItem="{Binding SelectedItem}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Width="200">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Tag="Name" Click="ListViewColumnHeaderClick" >Name</GridViewColumnHeader>
+                            </GridViewColumn.Header>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="100">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Tag="Memory" Click="ListViewColumnHeaderClick" >Memory</GridViewColumnHeader>
+                            </GridViewColumn.Header>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding MemoryFormatted}" TextAlignment="Right" HorizontalAlignment="Stretch"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <views:DetailsView
+                Grid.Column="2"
+                DataContext="{Binding DetailsViewModel}"/>
+
+        </Grid>
 
         <Grid  Grid.Row="2" Grid.Column="0">
             <Grid.ColumnDefinitions>

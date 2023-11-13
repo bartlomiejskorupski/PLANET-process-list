@@ -18,10 +18,32 @@ public class HomeViewModel : ViewModelBase
     private IEnumerable<ProcessViewModel> _unfilteredProcesses;
 
     private ObservableCollection<ProcessViewModel> _processList;
-    public ObservableCollection<ProcessViewModel> ProcessList { get => _processList; set { _processList = value; OnPropertyChanged(); } }
-
     private ProcessViewModel? _selectedItem;
-    public ProcessViewModel? SelectedItem { get => _selectedItem; set { _selectedItem = value; OnPropertyChanged(); } }
+    private DetailsViewModel _detailsViewModel;
+    private Visibility _detailsVisibility;
+
+    public ObservableCollection<ProcessViewModel> ProcessList { get => _processList; set { _processList = value; OnPropertyChanged(); } }
+    public ProcessViewModel? SelectedItem 
+    {
+        get => _selectedItem;
+        set 
+        {
+            _selectedItem = value; 
+            OnPropertyChanged();
+            OnSelectedItemChanged();
+        } 
+    }
+    public DetailsViewModel DetailsViewModel { get => _detailsViewModel; set { _detailsViewModel = value; OnPropertyChanged(); } }
+    public Visibility DetailsVisibility 
+    {
+        get => _detailsVisibility;
+        set 
+        { 
+            _detailsVisibility = value;
+            OnPropertyChanged();
+            DetailsViewModel.Visibility = value;
+        }
+    }
 
     private string _filterTBText;
     public string FilterTBText
@@ -37,9 +59,11 @@ public class HomeViewModel : ViewModelBase
 
     public ICommand KillProcessCommand { get; set; }
 
-    public HomeViewModel(IRefreshService refreshService, IProcessService processService) 
+    public HomeViewModel(IRefreshService refreshService, IProcessService processService, DetailsViewModel detailsViewModel) 
     {
         _processService = processService;
+        _detailsViewModel = detailsViewModel;
+        DetailsVisibility = Visibility.Collapsed;
         _unfilteredProcesses = new List<ProcessViewModel>();
         _processList = new ObservableCollection<ProcessViewModel>();
         _filterTBText = "";
@@ -48,6 +72,18 @@ public class HomeViewModel : ViewModelBase
 
         refreshService.OnRefreshProcessList += RefreshProcessList;
         RefreshProcessList();
+    }
+
+    private void OnSelectedItemChanged()
+    {
+        if(SelectedItem == null)
+        { 
+            return;
+        }
+
+        DetailsViewModel.SetDetailsFromId(SelectedItem.Id);
+        DetailsVisibility = Visibility.Visible;
+
     }
 
     private void KillSelectedProcess()
