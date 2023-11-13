@@ -14,12 +14,15 @@ namespace ProcessListWPF.ViewModels.Home;
 
 public class HomeViewModel : ViewModelBase
 {
+    private IProcessService _processService;
     private IEnumerable<ProcessViewModel> _unfilteredProcesses;
+
     private ObservableCollection<ProcessViewModel> _processList;
     public ObservableCollection<ProcessViewModel> ProcessList { get => _processList; set { _processList = value; OnPropertyChanged(nameof(ProcessList)); } }
+
     private ProcessViewModel? _selectedItem;
     public ProcessViewModel? SelectedItem { get => _selectedItem; set { _selectedItem = value; OnPropertyChanged(nameof(SelectedItem)); } }
-    public ICommand KillProcessCommand { get; set; }
+
     private string _filterTBText;
     public string FilterTBText
     {
@@ -32,8 +35,11 @@ public class HomeViewModel : ViewModelBase
         }
     }
 
-    public HomeViewModel(IRefreshService refreshService)
+    public ICommand KillProcessCommand { get; set; }
+
+    public HomeViewModel(IRefreshService refreshService, IProcessService processService) 
     {
+        _processService = processService;
         _unfilteredProcesses = new List<ProcessViewModel>();
         _processList = new ObservableCollection<ProcessViewModel>();
         _filterTBText = "";
@@ -46,8 +52,7 @@ public class HomeViewModel : ViewModelBase
 
     private void KillSelectedProcess()
     {
-        if (_selectedItem == null)
-            return;
+        if (_selectedItem == null) return;
 
         try
         {
@@ -66,7 +71,7 @@ public class HomeViewModel : ViewModelBase
 
     private async void RefreshProcessList()
     {
-        _unfilteredProcesses = await Task.Run(() => GetProcesses());
+        _unfilteredProcesses = await Task.Run(() => _processService.GetProcessList());
 
         UpdateProcessList(FilterTBText);
     }
@@ -86,30 +91,6 @@ public class HomeViewModel : ViewModelBase
             if (process.Equals(selected))
                 SelectedItem = process;
         }
-    }
-
-    private IEnumerable<ProcessViewModel> GetProcesses()
-    {
-        List<ProcessViewModel> processes = new List<ProcessViewModel>();
-        foreach (var process in Process.GetProcesses())
-        {
-            try
-            {
-                processes.Add(new ProcessViewModel()
-                {
-                    Id = process.Id,
-                    Name = process.ProcessName,
-                    Priority = process.BasePriority,
-                    Memory = process.WorkingSet64 / 1048576D
-
-                });
-            }
-            catch
-            {
-
-            }
-        }
-        return processes;
     }
 
 }
