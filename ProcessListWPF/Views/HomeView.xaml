@@ -70,6 +70,13 @@
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        <Setter Property="ToolTip">
+                            <Setter.Value>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Responding}"/>
+                                </StackPanel>
+                            </Setter.Value>
+                        </Setter>
                     </Style>
                 </ListView.ItemContainerStyle>
                 <ListView.View>

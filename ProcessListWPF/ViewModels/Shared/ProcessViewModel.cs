@@ -9,6 +9,7 @@ public class ProcessViewModel : ViewModelBase
     public int? Priority { get; set; }
     public double? Memory { get; set; }
     public string MemoryFormatted => $"{Memory:0.0} MB";
+    public string Responding { get; set; }
     public ProcessViewModel()
     {
 
