@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ProcessListWPF.ViewModels;
+namespace ProcessListWPF.ViewModels.Shared;
 
 public class ProcessViewModel : ViewModelBase
 {
@@ -11,7 +11,7 @@ public class ProcessViewModel : ViewModelBase
     public string MemoryFormatted => $"{Memory:0.0} MB";
     public ProcessViewModel()
     {
-        
+
     }
 
     public override bool Equals(object? obj)

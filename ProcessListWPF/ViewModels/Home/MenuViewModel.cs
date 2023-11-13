@@ -4,8 +4,9 @@ using System;
 using ProcessListWPF.Commands;
 using ProcessListWPF.Services;
 using System.Windows;
+using ProcessListWPF.ViewModels.Shared;
 
-namespace ProcessListWPF.ViewModels;
+namespace ProcessListWPF.ViewModels.Home;
 
 public class MenuViewModel : ViewModelBase
 {

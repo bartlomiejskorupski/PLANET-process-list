@@ -1,4 +1,6 @@
-﻿using ProcessListWPF.Views;
+﻿using ProcessListWPF.ViewModels.Home;
+using ProcessListWPF.ViewModels.Shared;
+using ProcessListWPF.Views;
 using System.Windows.Controls;
 
 namespace ProcessListWPF.ViewModels;

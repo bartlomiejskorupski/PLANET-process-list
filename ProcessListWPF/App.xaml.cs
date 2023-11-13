@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using ProcessListWPF.Services;
 using ProcessListWPF.ViewModels;
+using ProcessListWPF.ViewModels.Home;
 using ProcessListWPF.Views;
 using System.Windows;
 

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace ProcessListWPF.ViewModels;
+namespace ProcessListWPF.ViewModels.Shared;
 
 public abstract class ViewModelBase : INotifyPropertyChanged
 {

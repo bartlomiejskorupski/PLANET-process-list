@@ -1,5 +1,6 @@
 ﻿using ProcessListWPF.Commands;
 using ProcessListWPF.Services;
+using ProcessListWPF.ViewModels.Shared;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace ProcessListWPF.ViewModels;
+namespace ProcessListWPF.ViewModels.Home;
 
 public class HomeViewModel : ViewModelBase
 {
@@ -20,8 +21,8 @@ public class HomeViewModel : ViewModelBase
     public ProcessViewModel? SelectedItem { get => _selectedItem; set { _selectedItem = value; OnPropertyChanged(nameof(SelectedItem)); } }
     public ICommand KillProcessCommand { get; set; }
     private string _filterTBText;
-    public string FilterTBText 
-    { 
+    public string FilterTBText
+    {
         get => _filterTBText;
         set
         {
@@ -90,7 +91,7 @@ public class HomeViewModel : ViewModelBase
     private IEnumerable<ProcessViewModel> GetProcesses()
     {
         List<ProcessViewModel> processes = new List<ProcessViewModel>();
-        foreach(var process in Process.GetProcesses())
+        foreach (var process in Process.GetProcesses())
         {
             try
             {
