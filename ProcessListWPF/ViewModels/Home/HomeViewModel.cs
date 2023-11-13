@@ -18,10 +18,10 @@ public class HomeViewModel : ViewModelBase
     private IEnumerable<ProcessViewModel> _unfilteredProcesses;
 
     private ObservableCollection<ProcessViewModel> _processList;
-    public ObservableCollection<ProcessViewModel> ProcessList { get => _processList; set { _processList = value; OnPropertyChanged(nameof(ProcessList)); } }
+    public ObservableCollection<ProcessViewModel> ProcessList { get => _processList; set { _processList = value; OnPropertyChanged(); } }
 
     private ProcessViewModel? _selectedItem;
-    public ProcessViewModel? SelectedItem { get => _selectedItem; set { _selectedItem = value; OnPropertyChanged(nameof(SelectedItem)); } }
+    public ProcessViewModel? SelectedItem { get => _selectedItem; set { _selectedItem = value; OnPropertyChanged(); } }
 
     private string _filterTBText;
     public string FilterTBText

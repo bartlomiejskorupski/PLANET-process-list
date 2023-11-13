@@ -24,7 +24,7 @@ public class MenuViewModel : ViewModelBase
         set
         {
             _isRefreshFast = value;
-            OnPropertyChanged(nameof(IsRefreshFast));
+            OnPropertyChanged();
         }
     }
     private bool _isRefreshNormal;
@@ -34,7 +34,7 @@ public class MenuViewModel : ViewModelBase
         set
         {
             _isRefreshNormal = value;
-            OnPropertyChanged(nameof(IsRefreshNormal));
+            OnPropertyChanged();
         }
     }
     private bool _isRefreshSlow;
@@ -44,7 +44,7 @@ public class MenuViewModel : ViewModelBase
         set
         {
             _isRefreshSlow = value;
-            OnPropertyChanged(nameof(IsRefreshSlow));
+            OnPropertyChanged();
         }
     }
     private bool _isRefreshPaused;
@@ -54,7 +54,7 @@ public class MenuViewModel : ViewModelBase
         set
         {
             _isRefreshPaused = value;
-            OnPropertyChanged(nameof(IsRefreshPaused));
+            OnPropertyChanged();
         }
     }
     public ICommand ExitCommand { get; }
