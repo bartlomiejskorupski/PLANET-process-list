@@ -97,7 +97,7 @@
                             </GridViewColumn.Header>
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding MemoryFormatted}" TextAlignment="Right" HorizontalAlignment="Stretch"/>
+                                    <TextBlock Text="{Binding MemoryFormatted, Mode=OneWay}" TextAlignment="Right" HorizontalAlignment="Stretch"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

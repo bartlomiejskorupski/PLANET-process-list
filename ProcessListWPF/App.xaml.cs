@@ -22,7 +22,6 @@ public partial class App : Application
     private void ConfigureApplicationServices(HostBuilderContext context, IServiceCollection services)
     {
         services.AddSingleton<IRefreshService, RefreshService>();
-        services.AddSingleton<IProcessService, ProcessService>();
 
         services.AddTransient<MainViewModel>();
         services.AddTransient<HomeViewModel>();

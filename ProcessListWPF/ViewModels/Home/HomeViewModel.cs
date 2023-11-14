@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -14,9 +13,7 @@ namespace ProcessListWPF.ViewModels.Home;
 
 public class HomeViewModel : ViewModelBase
 {
-    private IProcessService _processService;
-    private IEnumerable<ProcessViewModel> _unfilteredProcesses;
-
+    private List<ProcessViewModel> _unfiltededProcesses;
     private ObservableCollection<ProcessViewModel> _processList;
     private ProcessViewModel? _selectedItem;
     private DetailsViewModel _detailsViewModel;
@@ -59,13 +56,12 @@ public class HomeViewModel : ViewModelBase
 
     public ICommand KillProcessCommand { get; set; }
 
-    public HomeViewModel(IRefreshService refreshService, IProcessService processService, DetailsViewModel detailsViewModel) 
+    public HomeViewModel(IRefreshService refreshService, DetailsViewModel detailsViewModel) 
     {
-        _processService = processService;
         _detailsViewModel = detailsViewModel;
         DetailsVisibility = Visibility.Collapsed;
-        _unfilteredProcesses = new List<ProcessViewModel>();
         _processList = new ObservableCollection<ProcessViewModel>();
+        _unfiltededProcesses = new List<ProcessViewModel>();
         _filterTBText = "";
 
         KillProcessCommand = new RelayCommand(_ => KillSelectedProcess(), _ => SelectedItem != null);
@@ -102,31 +98,53 @@ public class HomeViewModel : ViewModelBase
 
     private void FilterTBTextChanged()
     {
-        UpdateProcessList(FilterTBText);
+        UpdateProcessList(_unfiltededProcesses);
+        FilterProcessList(FilterTBText);
     }
 
-    private async void RefreshProcessList()
+    private void RefreshProcessList()
     {
-        _unfilteredProcesses = await Task.Run(() => _processService.GetProcessList());
-
-        UpdateProcessList(FilterTBText);
+        _unfiltededProcesses = Process.GetProcesses().Select(p => new ProcessViewModel(p)).ToList();
+        UpdateProcessList(_unfiltededProcesses);
+        FilterProcessList(FilterTBText);
     }
 
-    private void UpdateProcessList(string? filter = null)
+    private void UpdateProcessList(IEnumerable<ProcessViewModel> processes)
     {
-        var selected = SelectedItem;
-        ProcessList.Clear();
-
-        var processes = _unfilteredProcesses;
-        if (!string.IsNullOrEmpty(filter))
-            processes = _unfilteredProcesses.Where(proc => proc.Name?.ToLower().Contains(filter.ToLower()) ?? false);
-
         foreach (var process in processes)
         {
+            var pvm = ProcessList.Where(pvm => pvm.Id == process.Id).FirstOrDefault();
+            if (pvm != null)
+            {
+                pvm.SetFieldsFromPVM(process);
+                continue;
+            }
+
             ProcessList.Add(process);
-            if (process.Equals(selected))
-                SelectedItem = process;
         }
+
+        var currProcessIds = processes.Select(p => p.Id);
+        var killedProcesses = ProcessList.Where(pvm => !currProcessIds.Contains(pvm.Id));
+        for (int i = killedProcesses.Count() - 1; i >= 0; i--)
+        {
+            var killed = killedProcesses.ElementAt(i);
+            ProcessList.Remove(killed);
+        }
+    }
+
+    private void FilterProcessList(string filter)
+    {
+        if (string.IsNullOrEmpty(filter))
+            return;
+
+        for(int i = ProcessList.Count - 1; i >= 0; i--)
+        {
+            var process = ProcessList[i];
+            if (!process.Name?.ToLower().Contains(filter.ToLower()) ?? true)
+                ProcessList.Remove(process);
+        }
+
+        
     }
 
 }
