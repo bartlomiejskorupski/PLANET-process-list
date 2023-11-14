@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProcessListWPF.Core;
+using System;
 
 namespace ProcessListWPF.Commands;
 

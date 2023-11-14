@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using ProcessListWPF.Core;
 
 namespace ProcessListWPF.ViewModels.Shared;
 

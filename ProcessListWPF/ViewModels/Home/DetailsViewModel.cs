@@ -1,4 +1,4 @@
-﻿using ProcessListWPF.ViewModels.Shared;
+﻿using ProcessListWPF.Core;
 using System;
 using System.Diagnostics;
 using System.Windows;

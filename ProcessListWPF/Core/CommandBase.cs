@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace ProcessListWPF.Commands;
+namespace ProcessListWPF.Core;
 
 public abstract class CommandBase : ICommand
 {

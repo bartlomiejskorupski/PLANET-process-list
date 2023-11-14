@@ -1,4 +1,5 @@
 ﻿using ProcessListWPF.Commands;
+using ProcessListWPF.Core;
 using ProcessListWPF.Services;
 using ProcessListWPF.ViewModels.Shared;
 using System;

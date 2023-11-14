@@ -4,7 +4,7 @@ using System;
 using ProcessListWPF.Commands;
 using ProcessListWPF.Services;
 using System.Windows;
-using ProcessListWPF.ViewModels.Shared;
+using ProcessListWPF.Core;
 
 namespace ProcessListWPF.ViewModels.Home;
 
