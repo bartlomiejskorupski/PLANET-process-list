@@ -74,10 +74,11 @@ public class HomeViewModel : ViewModelBase
     private void OnSelectedItemChanged()
     {
         if(SelectedItem == null)
-        { 
+        {
+            DetailsVisibility = Visibility.Collapsed;
             return;
         }
-
+        DetailsViewModel.Error = false;
         DetailsViewModel.SetDetailsFromId(SelectedItem.Id);
         DetailsVisibility = Visibility.Visible;
 
@@ -108,6 +109,8 @@ public class HomeViewModel : ViewModelBase
         _unfiltededProcesses = Process.GetProcesses().Select(p => new ProcessViewModel(p)).ToList();
         UpdateProcessList(_unfiltededProcesses);
         FilterProcessList(FilterTBText);
+        if (DetailsVisibility == Visibility.Visible && SelectedItem is ProcessViewModel pvm)
+            DetailsViewModel.SetDetailsFromId(pvm.Id);
     }
 
     private void UpdateProcessList(IEnumerable<ProcessViewModel> processes)
