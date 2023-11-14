@@ -8,24 +8,38 @@
              d:DesignHeight="450" d:DesignWidth="300">
     <Grid Background="White"
           Visibility="{Binding Visibility}"
-          MinWidth="200">
+          MinWidth="200"
+          Margin="10">
+        <Grid.Resources>
+            <Style TargetType="Label">
+                <Setter Property="Margin" Value="0"/>
+            </Style>
+        </Grid.Resources>
         <Grid.RowDefinitions>
-            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
 
-        <StackPanel Margin="10">
-            <TextBlock Text="Process Details" FontSize="20" TextAlignment="Center"/>
-            <TextBlock Text="Name"/>
-            <TextBlock Text="{Binding Name}"/>
-            <TextBlock Text="ID"/>
-            <TextBlock Text="{Binding Id}"/>
-            <TextBlock Text="Start Time"/>
-            <TextBlock Text="{Binding StartTime}"/>
-        </StackPanel>
+        <Label Content="Details"
+               Grid.ColumnSpan="2"
+               HorizontalAlignment="Center"
+               FontSize="14"/>
 
-        <ListView Grid.Row="1">
-            
-        </ListView>
+        <Label Content="Name:" Grid.Row="1"/>
+        <Label Content="devenv.exe" Grid.Row="1" Grid.Column="1"/>
+
+        <Label Content="ID:" Grid.Row="2"/>
+        <Label Content="123" Grid.Row="2" Grid.Column="1"/>
+
+        <Label Content="Memory:" Grid.Row="3"/>
+        <Label Content="1337.0 MB" Grid.Row="3" Grid.Column="1"/>
+
     </Grid>
 </UserControl>
