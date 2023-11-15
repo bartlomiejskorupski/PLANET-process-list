@@ -1,6 +1,5 @@
-﻿using System;
-using System.Diagnostics;
-using ProcessListWPF.Core;
+﻿using ProcessListWPF.Core;
+using ProcessListWPF.Models;
 
 namespace ProcessListWPF.ViewModels.Shared;
 
@@ -24,39 +23,18 @@ public class ProcessViewModel : ViewModelBase
         _responding = string.Empty;
     }
 
-    public ProcessViewModel(Process process) : this()
+    public ProcessViewModel(ProcessModel model) : this()
     {
-        SetFieldsFromProcess(process);
+        Update(model);
     }
 
-    public void SetFieldsFromProcess(Process process)
+    public void Update(ProcessModel model)
     {
-        Id = process.Id;
-        Name = process.ProcessName;
-        Priority = process.BasePriority;
-        Memory = process.WorkingSet64 / 1048576D;
-        Responding = process.Responding ? "Responding" : "Not responding";
-    }
-
-    public void SetFieldsFromPVM(ProcessViewModel other)
-    {
-        Id = other.Id;
-        Name = other.Name;
-        Priority = other.Priority;
-        Memory = other.Memory;
-        Responding = other.Responding;
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return obj is ProcessViewModel model &&
-               Id == model.Id &&
-               Name == model.Name;
-    }
-
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(Id, Name);
+        Id = model.Id;
+        Name = model.Name;
+        Priority = model.Priority;
+        Memory = model.MemoryMB;
+        Responding = model.Responding ? "Responding" : "Not responding";
     }
 
 }
