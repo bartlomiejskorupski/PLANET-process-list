@@ -9,12 +9,10 @@ public class ProcessModel
 
     public int Id { get; set; }
     public string Name { get; set; }
-    public int Priority { get; set; }
+    public ProcessPriorityClass Priority { get; set; }
     public double MemoryBytes { get; set; }
     public double MemoryMB => MemoryBytes / 1048576.0;
     public bool Responding { get; set; }
-
-    // TODO ERRORS
 
     public ProcessModel()
     {
@@ -25,7 +23,14 @@ public class ProcessModel
     {
         Id = process.Id;
         Name = process.ProcessName;
-        Priority = process.BasePriority;
+        try
+        {
+            Priority = process.PriorityClass;
+        }
+        catch
+        {
+            Priority = ProcessPriorityClass.Idle;
+        }
         MemoryBytes = process.WorkingSet64;
         Responding = process.Responding;
     }
@@ -34,7 +39,7 @@ public class ProcessModel
     {
         Id = process.Id;
         Name = process.ProcessName;
-        Priority = process.BasePriority;
+        Priority = process.PriorityClass;
         MemoryBytes = process.WorkingSet64;
         Responding = process.Responding;
 

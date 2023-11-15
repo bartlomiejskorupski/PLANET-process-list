@@ -34,30 +34,37 @@ public class ProcessViewModel : ViewModelBase
     {
         Id = model.Id;
         Name = model.Name;
-        Priority = model.Priority;
+        Priority = GetPriorityOrdered(model.Priority);
         Memory = model.MemoryMB;
         Responding = model.Responding ? "Responding" : "Not responding";
     }
 
+    public int GetPriorityOrdered(ProcessPriorityClass priorityClass)
+    {
+        switch (priorityClass)
+        {
+            case ProcessPriorityClass.Idle: return 0;
+            case ProcessPriorityClass.BelowNormal: return 1;
+            case ProcessPriorityClass.Normal: return 2;
+            case ProcessPriorityClass.AboveNormal: return 3;
+            case ProcessPriorityClass.High: return 4;
+            case ProcessPriorityClass.RealTime: return 5;
+        }
+        return -1;
+    }
+
     public string GetFormattedPriority()
     {
-        var priority = "";
-
         switch (Priority)
         {
-            case 0: priority = "Lowest"; break;
-            case 4: priority = "Idle"; break;
-            case 6: priority = "Below Normal"; break;
-            case 8: priority = "Normal"; break;
-            case 9: priority = "Above Normal"; break;
-            case 10: priority = "High"; break;
-            case 11: priority = "Time Critical"; break;
-            case 13: priority = "Highest"; break;
-            case 24: priority = "Real Time"; break;
-            default: priority = Priority.ToString(); break;
+            case 0: return "Idle";
+            case 1: return "BelowNormal";
+            case 2: return "Normal";
+            case 3: return "AboveNormal";
+            case 4: return "High";
+            case 5: return "RealTime";
         }
-
-        return priority;
+        return "unknown";
     }
 
 }
