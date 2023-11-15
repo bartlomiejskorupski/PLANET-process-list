@@ -31,7 +31,15 @@ public class DetailsViewModel : ViewModelBase
 
     public void SetDetailsFromId(int processId)
     {
-        var process = Process.GetProcessById(processId);
+        Process process;
+        try
+        {
+            process = Process.GetProcessById(processId);
+        }
+        catch (Exception)
+        {
+            return;
+        }
         Name = process.ProcessName;
         Id = process.Id;
         if (Error)

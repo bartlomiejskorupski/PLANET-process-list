@@ -83,7 +83,7 @@
                     <GridView>
                         <GridViewColumn Width="200">
                             <GridViewColumn.Header>
-                                <GridViewColumnHeader Tag="Name" Click="ListViewColumnHeaderClick" >Name</GridViewColumnHeader>
+                                <GridViewColumnHeader Tag="Name" Click="ListViewColumnHeaderClick">Name</GridViewColumnHeader>
                             </GridViewColumn.Header>
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
@@ -93,11 +93,21 @@
                         </GridViewColumn>
                         <GridViewColumn Width="100">
                             <GridViewColumn.Header>
-                                <GridViewColumnHeader Tag="Memory" Click="ListViewColumnHeaderClick" >Memory</GridViewColumnHeader>
+                                <GridViewColumnHeader Tag="Memory" Click="ListViewColumnHeaderClick">Memory</GridViewColumnHeader>
                             </GridViewColumn.Header>
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding MemoryFormatted, Mode=OneWay}" TextAlignment="Right" HorizontalAlignment="Stretch"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="100">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Tag="Priority" Click="ListViewColumnHeaderClick">Priority</GridViewColumnHeader>
+                            </GridViewColumn.Header>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding PriorityFormatted}" TextAlignment="Center" HorizontalAlignment="Stretch"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
