@@ -1,5 +1,6 @@
 ﻿using ProcessListWPF.Core;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
 
@@ -19,17 +20,22 @@ public class DetailsViewModel : ViewModelBase
     public string Status { get => _status; set { _status = value; OnPropertyChanged(); } }
     public Visibility Visibility { get => _visibility; set { _visibility = value; OnPropertyChanged(); } }
 
-    public bool Error { get; set; }
+    private HashSet<string> _erroredProperties;
 
     public DetailsViewModel()
     {
         _name = string.Empty;
         _startTime = string.Empty;
         _status = string.Empty;
-        Error = false;
+        _erroredProperties = new HashSet<string>();
     }
 
-    public void SetDetailsFromId(int processId)
+    public void ClearErrors()
+    {
+        _erroredProperties.Clear();
+    }
+
+    public void UpdateDetails(int processId)
     {
         Process process;
         try
@@ -40,18 +46,21 @@ public class DetailsViewModel : ViewModelBase
         {
             return;
         }
-        Name = process.ProcessName;
         Id = process.Id;
-        if (Error)
-            return;
-        try
+        Name = process.ProcessName;
+
+        if (!_erroredProperties.Contains(nameof(StartTime)))
         {
-            StartTime = process.StartTime.ToString("dd.MM.yyyy H:mm:ss");
-        } catch 
-        {
-            StartTime = "Unknown";
-            Error = true;
+            try
+            {
+                StartTime = process.StartTime.ToString("dd.MM.yyyy H:mm:ss");
+            } catch 
+            {
+                StartTime = "Unknown";
+                _erroredProperties.Add(nameof(StartTime));
+            }
         }
+
     }
 
 }

@@ -82,8 +82,8 @@ public class HomeViewModel : ViewModelBase
             DetailsVisibility = Visibility.Collapsed;
             return;
         }
-                    DetailsViewModel.Error = false;
-        DetailsViewModel.SetDetailsFromId(SelectedItem.Id);
+        DetailsViewModel.ClearErrors();
+        DetailsViewModel.UpdateDetails(SelectedItem.Id);
         DetailsVisibility = Visibility.Visible;
 
     }
@@ -125,7 +125,7 @@ public class HomeViewModel : ViewModelBase
         UpdateProcessList();
         FilterProcessList(FilterTBText);
         if (DetailsVisibility == Visibility.Visible && SelectedItem is ProcessViewModel pvm)
-            DetailsViewModel.SetDetailsFromId(pvm.Id);
+            DetailsViewModel.UpdateDetails(pvm.Id);
     }
 
     private void UpdateProcessList()

@@ -20,6 +20,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -33,13 +34,16 @@
                FontSize="14"/>
 
         <Label Content="Name:" Grid.Row="1"/>
-        <Label Content="devenv.exe" Grid.Row="1" Grid.Column="1"/>
+        <Label Content="{Binding Name}" Grid.Row="1" Grid.Column="1"/>
 
         <Label Content="ID:" Grid.Row="2"/>
-        <Label Content="123" Grid.Row="2" Grid.Column="1"/>
+        <Label Content="{Binding Id}" Grid.Row="2" Grid.Column="1"/>
 
         <Label Content="Memory:" Grid.Row="3"/>
         <Label Content="1337.0 MB" Grid.Row="3" Grid.Column="1"/>
+
+        <Label Content="Start Time:" Grid.Row="4"/>
+        <Label Content="{Binding StartTime}" Grid.Row="4" Grid.Column="1"/>
 
     </Grid>
 </UserControl>
