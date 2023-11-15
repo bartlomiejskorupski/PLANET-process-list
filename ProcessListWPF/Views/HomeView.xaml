@@ -52,15 +52,15 @@
               Grid.Column="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
-                <ColumnDefinition Width="auto"/>
+                <!-- <ColumnDefinition Width="auto"/> -->
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             
-            <GridSplitter Grid.Column="1"
+            <!--<GridSplitter Grid.Column="1"
                           HorizontalAlignment="Center"
                           VerticalAlignment="Stretch"
                           Width="5"
-                          Visibility="{Binding DetailsVisibility}"/>
+                          Visibility="{Binding DetailsVisibility}"/> -->
             
             <ListView x:Name="ProcessListView"
                       Grid.Column="0"

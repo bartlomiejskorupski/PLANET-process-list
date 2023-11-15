@@ -108,22 +108,20 @@ public class HomeViewModel : ViewModelBase
         FilterProcessList(FilterTBText);
     }
 
-    private void UpdateUnfilteredProcesses()
+    private async Task<List<ProcessModel>> GetProcessModelListAsync()
     {
-        _unfilteredProcesses.Clear();
-
-        var processes = Process.GetProcesses();
-
-        foreach (var process in processes)
-        {
-            _unfilteredProcesses.Add(new ProcessModel(process));
-        }
-
+        return await Task.Run(() => GetProcessModelList());
     }
 
-    private void RefreshProcessList()
+    private List<ProcessModel> GetProcessModelList()
     {
-        UpdateUnfilteredProcesses();
+        return Process.GetProcesses().Select(p => new ProcessModel(p)).ToList();
+    }
+
+    private async void RefreshProcessList()
+    {
+        var processModelList = await GetProcessModelListAsync();
+        _unfilteredProcesses = processModelList;
         UpdateProcessList();
         FilterProcessList(FilterTBText);
         if (DetailsVisibility == Visibility.Visible && SelectedItem is ProcessViewModel pvm)
