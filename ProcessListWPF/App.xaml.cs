@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ProcessListWPF.Core;
 using ProcessListWPF.Services;
 using ProcessListWPF.ViewModels;
 using ProcessListWPF.ViewModels.Home;
@@ -25,6 +26,10 @@ public partial class App : Application
     {
         services.AddSingleton<IRefreshService, RefreshService>();
 
+        services.AddTransient<ChangePriorityWindow>();
+        services.AddSingleton<Func<ChangePriorityWindow>>(s => () => s.GetRequiredService<ChangePriorityWindow>());
+        services.AddSingleton<IDialogFactory<ChangePriorityWindow>, DialogFactory<ChangePriorityWindow>>();
+
         services.AddTransient<MainViewModel>();
         services.AddTransient<HomeViewModel>();
         services.AddTransient<MenuViewModel>();
@@ -39,10 +44,6 @@ public partial class App : Application
             DataContext = s.GetRequiredService<MenuViewModel>()
         });
         services.AddSingleton<HomeView>();
-
-        services.AddTransient<ChangePriorityWindow>();
-        services.AddSingleton<Func<ChangePriorityWindow>>(s => () => s.GetRequiredService<ChangePriorityWindow>());
-
     }
 
     protected override async void OnStartup(StartupEventArgs e)

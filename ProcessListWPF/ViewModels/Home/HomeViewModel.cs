@@ -18,8 +18,8 @@ namespace ProcessListWPF.ViewModels.Home;
 public class HomeViewModel : ViewModelBase
 {
     private ProcessModelCollection _processCollection;
-    private readonly Func<ChangePriorityWindow> _priorityWindowFactory;
-
+    private IDialogFactory<ChangePriorityWindow> _changePriorityDialogFactory;
+    
     private ObservableCollection<ProcessViewModel> _processList;
     
     private ProcessViewModel? _selectedItem;
@@ -64,10 +64,10 @@ public class HomeViewModel : ViewModelBase
     public ICommand KillProcessCommand { get; set; }
     public ICommand ChangePriorityCommand { get; set; }
 
-    public HomeViewModel(IRefreshService refreshService, DetailsViewModel detailsViewModel, Func<ChangePriorityWindow> priorityWindowFactory) 
+    public HomeViewModel(IRefreshService refreshService, DetailsViewModel detailsViewModel, IDialogFactory<ChangePriorityWindow> changePriorityDialogFactory) 
     {
         _detailsViewModel = detailsViewModel;
-        _priorityWindowFactory = priorityWindowFactory;
+        _changePriorityDialogFactory = changePriorityDialogFactory;
         DetailsVisibility = Visibility.Collapsed;
         _processList = new ObservableCollection<ProcessViewModel>();
         _processCollection = new ProcessModelCollection();
@@ -94,7 +94,7 @@ public class HomeViewModel : ViewModelBase
 
     private void ChangeSelectedPriority()
     {
-        ChangePriorityWindow priorityWindow = _priorityWindowFactory();
+        var priorityWindow = _changePriorityDialogFactory.Create();
         var success = priorityWindow.ShowDialog();
         if (success == false)
             return;
