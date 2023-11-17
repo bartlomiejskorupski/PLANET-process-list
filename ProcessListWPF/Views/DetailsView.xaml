@@ -21,6 +21,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -44,6 +45,14 @@
 
         <Label Content="Start Time:" Grid.Row="4"/>
         <Label Content="{Binding StartTime}" Grid.Row="4" Grid.Column="1"/>
+
+        <Label Content="Location:" Grid.Row="5"/>
+        <ScrollViewer Grid.Row="5" Grid.Column="1"
+                      MaxWidth="200"
+                      VerticalScrollBarVisibility="Disabled"
+                      HorizontalScrollBarVisibility="Auto">
+            <Label Content="{Binding Location}"/>
+        </ScrollViewer>
 
     </Grid>
 </UserControl>

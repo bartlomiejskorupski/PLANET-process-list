@@ -15,6 +15,7 @@ public class ProcessModel
     public double MemoryMB => MemoryBytes / 1048576.0;
     public bool Responding { get; set; }
     public DateTime? StartTime { get; set; }
+    public string Location { get; set; }
 
     private HashSet<string> _erroredProperties;
     public bool UpdatedFlag { get; set; }
@@ -24,6 +25,7 @@ public class ProcessModel
         _erroredProperties = new HashSet<string>();
         Name = string.Empty;
         UpdatedFlag = false;
+        Location = string.Empty;
     }
 
     public ProcessModel(Process process) : this()
@@ -40,7 +42,7 @@ public class ProcessModel
         Responding = process.Responding;
 
         TryUpdateProperty(nameof(Priority), () => Priority = process.PriorityClass, () => Priority = ProcessPriorityClass.Idle);
-
+        TryUpdateProperty(nameof(Location), () => Location = process.MainModule!.FileName, () => Location = "Unknown");
     }
 
     public void UpdateDetails()
@@ -48,8 +50,6 @@ public class ProcessModel
         if (_process == null) return;
 
         TryUpdateProperty(nameof(StartTime), () => StartTime = _process.StartTime);
-
-        
     }
 
     private void TryUpdateProperty(string propertyName, Action updatePropertyAction, Action? actionOnError = null)

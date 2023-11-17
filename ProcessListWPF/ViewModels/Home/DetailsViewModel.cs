@@ -22,6 +22,13 @@ public class DetailsViewModel : ViewModelBase
     public string Status { get => _status; set { _status = value; OnPropertyChanged(); } }
     public Visibility Visibility { get => _visibility; set { _visibility = value; OnPropertyChanged(); } }
     public string Memory { get => _memory; set { _memory = value; OnPropertyChanged(); } }
+    private string _location;
+
+    public string Location
+    {
+        get { return _location; }
+        set { _location = value; OnPropertyChanged(); }
+    }
 
 
     public DetailsViewModel()
@@ -30,6 +37,7 @@ public class DetailsViewModel : ViewModelBase
         _startTime = string.Empty;
         _status = string.Empty;
         _memory = string.Empty;
+        _location = string.Empty;
     }
 
     public void UpdateDetails(ProcessModel model)
@@ -47,6 +55,7 @@ public class DetailsViewModel : ViewModelBase
         {
             StartTime = "Unknown";
         }
+        Location = model.Location;
     }
 
 }

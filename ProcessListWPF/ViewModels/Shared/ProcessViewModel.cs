@@ -13,7 +13,7 @@ public class ProcessViewModel : ViewModelBase
     private int _priority;
     private double _memory;
     private string _responding;
-    private string _cmdLine;
+    private string _location;
 
     public int Id { get => _id; set { _id = value; OnPropertyChanged(); } }
     public string Name { get => _name; set { _name = value; OnPropertyChanged(); } }
@@ -23,17 +23,17 @@ public class ProcessViewModel : ViewModelBase
     public string MemoryFormatted => $"{Memory:0.0} MB";
     public string Responding { get => _responding; set { _responding = value; OnPropertyChanged(); } }
 
-    public string CmdLine
+    public string Location
     {
-        get { return _cmdLine; }
-        set { _cmdLine = value; OnPropertyChanged(); }
+        get { return _location; }
+        set { _location = value; OnPropertyChanged(); }
     }
 
     public ProcessViewModel()
     {
         _name = string.Empty;
         _responding = string.Empty;
-        _cmdLine = string.Empty;
+        _location = string.Empty;
     }
 
     public ProcessViewModel(ProcessModel model) : this()
@@ -49,6 +49,7 @@ public class ProcessViewModel : ViewModelBase
         Priority = GetPriorityOrdered(model.Priority);
         Memory = model.MemoryMB;
         Responding = model.Responding ? "Responding" : "Not responding";
+        Location = model.Location;
     }
 
     public int GetPriorityOrdered(ProcessPriorityClass priorityClass)
