@@ -6,7 +6,7 @@ namespace ProcessListWPF.Models;
 
 public class ProcessModel
 {
-    public event EventHandler<EventArgs>? Changed;
+    private Process? _process;
 
     public int Id { get; set; }
     public string Name { get; set; }
@@ -14,7 +14,7 @@ public class ProcessModel
     public double MemoryBytes { get; set; }
     public double MemoryMB => MemoryBytes / 1048576.0;
     public bool Responding { get; set; }
-    public string CmdLine { get; set; }
+    public DateTime? StartTime { get; set; }
 
     private HashSet<string> _erroredProperties;
     public bool UpdatedFlag { get; set; }
@@ -23,7 +23,6 @@ public class ProcessModel
     {
         _erroredProperties = new HashSet<string>();
         Name = string.Empty;
-        CmdLine = string.Empty;
         UpdatedFlag = false;
     }
 
@@ -34,38 +33,39 @@ public class ProcessModel
 
     public void Update(Process process)
     {
+        _process = process; 
         Id = process.Id;
         Name = process.ProcessName;
         MemoryBytes = process.WorkingSet64;
         Responding = process.Responding;
 
-        if (!_erroredProperties.Contains(nameof(Priority)))
+        TryUpdateProperty(nameof(Priority), () => Priority = process.PriorityClass, () => Priority = ProcessPriorityClass.Idle);
+
+    }
+
+    public void UpdateDetails()
+    {
+        if (_process == null) return;
+
+        TryUpdateProperty(nameof(StartTime), () => StartTime = _process.StartTime);
+
+        
+    }
+
+    private void TryUpdateProperty(string propertyName, Action updatePropertyAction, Action? actionOnError = null)
+    {
+        if (!_erroredProperties.Contains(propertyName))
         {
             try
             {
-                Priority = process.PriorityClass;
+                updatePropertyAction();
             }
             catch
             {
-                Priority = ProcessPriorityClass.Idle;
-                _erroredProperties.Add(nameof(Priority));
+                actionOnError?.Invoke();
+                _erroredProperties.Add(propertyName);
             }
         }
-
-        if (!_erroredProperties.Contains(nameof(CmdLine)))
-        {
-            try
-            {
-                CmdLine = process.MainModule!.FileName;
-            }
-            catch
-            {
-                CmdLine = "Unknown";
-                _erroredProperties.Add(nameof(CmdLine));
-            }
-        }
-
-        Changed?.Invoke(this, new EventArgs());
     }
 
     public override bool Equals(object? obj)

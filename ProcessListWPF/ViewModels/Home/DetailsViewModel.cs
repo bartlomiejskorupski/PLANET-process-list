@@ -37,6 +37,16 @@ public class DetailsViewModel : ViewModelBase
         Id = model.Id;
         Name = model.Name;
         Memory = $"{model.MemoryMB:0.0} MB (bytes: {model.MemoryBytes})";
+
+        model.UpdateDetails();
+        if(model.StartTime is DateTime startTime)
+        {
+            StartTime = startTime.ToString("dd.MM.yyyy HH:mm:ss");
+        }
+        else
+        {
+            StartTime = "Unknown";
+        }
     }
 
 }

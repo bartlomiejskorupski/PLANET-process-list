@@ -49,7 +49,6 @@ public class ProcessViewModel : ViewModelBase
         Priority = GetPriorityOrdered(model.Priority);
         Memory = model.MemoryMB;
         Responding = model.Responding ? "Responding" : "Not responding";
-        CmdLine = model.CmdLine;
     }
 
     public int GetPriorityOrdered(ProcessPriorityClass priorityClass)
