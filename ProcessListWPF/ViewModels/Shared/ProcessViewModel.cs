@@ -6,11 +6,14 @@ namespace ProcessListWPF.ViewModels.Shared;
 
 public class ProcessViewModel : ViewModelBase
 {
+    public ProcessModel? Model { get; set; }
+
     private int _id;
     private string _name;
     private int _priority;
     private double _memory;
     private string _responding;
+    private string _cmdLine;
 
     public int Id { get => _id; set { _id = value; OnPropertyChanged(); } }
     public string Name { get => _name; set { _name = value; OnPropertyChanged(); } }
@@ -19,10 +22,18 @@ public class ProcessViewModel : ViewModelBase
     public double Memory { get => _memory; set { _memory = value; OnPropertyChanged(); OnPropertyChanged(nameof(MemoryFormatted)); } }
     public string MemoryFormatted => $"{Memory:0.0} MB";
     public string Responding { get => _responding; set { _responding = value; OnPropertyChanged(); } }
+
+    public string CmdLine
+    {
+        get { return _cmdLine; }
+        set { _cmdLine = value; OnPropertyChanged(); }
+    }
+
     public ProcessViewModel()
     {
         _name = string.Empty;
         _responding = string.Empty;
+        _cmdLine = string.Empty;
     }
 
     public ProcessViewModel(ProcessModel model) : this()
@@ -32,11 +43,13 @@ public class ProcessViewModel : ViewModelBase
 
     public void Update(ProcessModel model)
     {
+        Model = model;
         Id = model.Id;
         Name = model.Name;
         Priority = GetPriorityOrdered(model.Priority);
         Memory = model.MemoryMB;
         Responding = model.Responding ? "Responding" : "Not responding";
+        CmdLine = model.CmdLine;
     }
 
     public int GetPriorityOrdered(ProcessPriorityClass priorityClass)

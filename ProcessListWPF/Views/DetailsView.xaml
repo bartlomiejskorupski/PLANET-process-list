@@ -40,7 +40,7 @@
         <Label Content="{Binding Id}" Grid.Row="2" Grid.Column="1"/>
 
         <Label Content="Memory:" Grid.Row="3"/>
-        <Label Content="1337.0 MB" Grid.Row="3" Grid.Column="1"/>
+        <Label Content="{Binding Memory}" Grid.Row="3" Grid.Column="1"/>
 
         <Label Content="Start Time:" Grid.Row="4"/>
         <Label Content="{Binding StartTime}" Grid.Row="4" Grid.Column="1"/>

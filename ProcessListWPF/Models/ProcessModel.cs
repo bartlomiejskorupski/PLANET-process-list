@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace ProcessListWPF.Models;
@@ -13,35 +14,56 @@ public class ProcessModel
     public double MemoryBytes { get; set; }
     public double MemoryMB => MemoryBytes / 1048576.0;
     public bool Responding { get; set; }
+    public string CmdLine { get; set; }
+
+    private HashSet<string> _erroredProperties;
+    public bool UpdatedFlag { get; set; }
 
     public ProcessModel()
     {
+        _erroredProperties = new HashSet<string>();
         Name = string.Empty;
+        CmdLine = string.Empty;
+        UpdatedFlag = false;
     }
 
-    public ProcessModel(Process process)
+    public ProcessModel(Process process) : this()
     {
-        Id = process.Id;
-        Name = process.ProcessName;
-        try
-        {
-            Priority = process.PriorityClass;
-        }
-        catch
-        {
-            Priority = ProcessPriorityClass.Idle;
-        }
-        MemoryBytes = process.WorkingSet64;
-        Responding = process.Responding;
+        Update(process);
     }
 
     public void Update(Process process)
     {
         Id = process.Id;
         Name = process.ProcessName;
-        Priority = process.PriorityClass;
         MemoryBytes = process.WorkingSet64;
         Responding = process.Responding;
+
+        if (!_erroredProperties.Contains(nameof(Priority)))
+        {
+            try
+            {
+                Priority = process.PriorityClass;
+            }
+            catch
+            {
+                Priority = ProcessPriorityClass.Idle;
+                _erroredProperties.Add(nameof(Priority));
+            }
+        }
+
+        if (!_erroredProperties.Contains(nameof(CmdLine)))
+        {
+            try
+            {
+                CmdLine = process.MainModule!.FileName;
+            }
+            catch
+            {
+                CmdLine = "Unknown";
+                _erroredProperties.Add(nameof(CmdLine));
+            }
+        }
 
         Changed?.Invoke(this, new EventArgs());
     }

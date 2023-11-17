@@ -73,7 +73,7 @@
                         <Setter Property="ToolTip">
                             <Setter.Value>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Responding}"/>
+                                    <TextBlock Text="{Binding CmdLine}"/>
                                 </StackPanel>
                             </Setter.Value>
                         </Setter>
