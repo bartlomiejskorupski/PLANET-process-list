@@ -2,6 +2,7 @@
 using ProcessListWPF.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows;
 
@@ -30,9 +31,16 @@ public class DetailsViewModel : ViewModelBase
         set { _location = value; OnPropertyChanged(); }
     }
 
+    private List<string> _modulesList;
+    public List<string> ModulesList { get => _modulesList; set { _modulesList = value; OnPropertyChanged(); } }
+    private List<string> _threadsList;
+    public List<string> ThreadsList { get => _threadsList; set { _threadsList = value; OnPropertyChanged(); } }
+
 
     public DetailsViewModel()
     {
+        _modulesList = new List<string>();
+        _threadsList = new List<string>();
         _name = string.Empty;
         _startTime = string.Empty;
         _status = string.Empty;
@@ -56,6 +64,9 @@ public class DetailsViewModel : ViewModelBase
             StartTime = "Unknown";
         }
         Location = model.Location;
+
+        ModulesList = model.ModulesList;
+        ThreadsList = model.ThreadsList;
     }
 
 }

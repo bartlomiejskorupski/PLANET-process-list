@@ -19,10 +19,13 @@ public class ProcessModel
 
     private HashSet<string> _erroredProperties;
     public bool UpdatedFlag { get; set; }
+    public List<string> ModulesList { get; set; }
+    public List<string> ThreadsList { get; set; }
 
     public ProcessModel()
     {
         _erroredProperties = new HashSet<string>();
+        ModulesList = new List<string>();
         Name = string.Empty;
         UpdatedFlag = false;
         Location = string.Empty;
@@ -50,6 +53,28 @@ public class ProcessModel
         if (_process == null) return;
 
         TryUpdateProperty(nameof(StartTime), () => StartTime = _process.StartTime);
+        TryUpdateProperty(nameof(ModulesList), () =>
+        {
+            var modules = _process.Modules;
+            ModulesList = new List<string>();
+            foreach (ProcessModule module in modules)
+            {
+                var moduleStr = $"{module.ModuleName}";
+                ModulesList.Add(moduleStr);
+            }
+        },
+        () => ModulesList = new List<string>() { "Unknown" } );
+        TryUpdateProperty(nameof(ThreadsList), () =>
+        {
+            var threads = _process.Threads;
+            ThreadsList = new List<string>();
+            foreach (ProcessThread thread in threads)
+            {
+                var threadStr = $"{thread.Id}";
+                ThreadsList.Add(threadStr);
+            }
+        },
+        () => ThreadsList = new List<string>() { "Unknown" });
     }
 
     private void TryUpdateProperty(string propertyName, Action updatePropertyAction, Action? actionOnError = null)

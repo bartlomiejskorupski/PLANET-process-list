@@ -5,14 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ProcessListWPF.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="300">
+             d:DesignHeight="450" d:DesignWidth="320">
     <Grid Background="White"
           Visibility="{Binding Visibility}"
-          MinWidth="200"
+          Width="300"
           Margin="10">
         <Grid.Resources>
             <Style TargetType="Label">
                 <Setter Property="Margin" Value="0"/>
+                <Setter Property="FontSize" Value="10"/>
             </Style>
         </Grid.Resources>
         <Grid.RowDefinitions>
@@ -48,11 +49,24 @@
 
         <Label Content="Location:" Grid.Row="5"/>
         <ScrollViewer Grid.Row="5" Grid.Column="1"
-                      MaxWidth="200"
                       VerticalScrollBarVisibility="Disabled"
                       HorizontalScrollBarVisibility="Auto">
             <Label Content="{Binding Location}"/>
         </ScrollViewer>
 
+        <TabControl Grid.Row="6" Grid.ColumnSpan="2">
+            <TabControl.Resources>
+
+            </TabControl.Resources>
+            <TabItem Header="Modules">
+                <ListBox
+                    ItemsSource="{Binding ModulesList}"/>
+            </TabItem>
+            <TabItem Header="Threads">
+                <ListBox
+                    ItemsSource="{Binding ThreadsList}"/>
+            </TabItem>
+        </TabControl>
+        
     </Grid>
 </UserControl>
