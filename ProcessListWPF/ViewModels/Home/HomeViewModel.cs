@@ -3,6 +3,7 @@ using ProcessListWPF.Core;
 using ProcessListWPF.Models;
 using ProcessListWPF.Services;
 using ProcessListWPF.ViewModels.Shared;
+using ProcessListWPF.Views.Shared;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,6 +18,7 @@ namespace ProcessListWPF.ViewModels.Home;
 public class HomeViewModel : ViewModelBase
 {
     private ProcessModelCollection _processCollection;
+    private readonly Func<ChangePriorityWindow> _priorityWindowFactory;
 
     private ObservableCollection<ProcessViewModel> _processList;
     
@@ -60,16 +62,19 @@ public class HomeViewModel : ViewModelBase
     }
 
     public ICommand KillProcessCommand { get; set; }
+    public ICommand ChangePriorityCommand { get; set; }
 
-    public HomeViewModel(IRefreshService refreshService, DetailsViewModel detailsViewModel) 
+    public HomeViewModel(IRefreshService refreshService, DetailsViewModel detailsViewModel, Func<ChangePriorityWindow> priorityWindowFactory) 
     {
         _detailsViewModel = detailsViewModel;
+        _priorityWindowFactory = priorityWindowFactory;
         DetailsVisibility = Visibility.Collapsed;
         _processList = new ObservableCollection<ProcessViewModel>();
         _processCollection = new ProcessModelCollection();
         _filterTBText = "";
 
         KillProcessCommand = new RelayCommand(_ => KillSelectedProcess(), _ => SelectedItem != null);
+        ChangePriorityCommand = new RelayCommand(_ => ChangeSelectedPriority(), _ => SelectedItem != null);
 
         refreshService.OnRefreshProcessList += RefreshProcessList;
         RefreshProcessList();
@@ -85,6 +90,15 @@ public class HomeViewModel : ViewModelBase
         DetailsViewModel.UpdateDetails(SelectedItem.Model!);
         DetailsVisibility = Visibility.Visible;
 
+    }
+
+    private void ChangeSelectedPriority()
+    {
+        ChangePriorityWindow priorityWindow = _priorityWindowFactory();
+        var success = priorityWindow.ShowDialog();
+        if (success == false)
+            return;
+        // TODO
     }
 
     private void KillSelectedProcess()

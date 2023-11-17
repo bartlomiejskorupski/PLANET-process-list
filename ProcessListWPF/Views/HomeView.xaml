@@ -82,7 +82,7 @@
                 <ListView.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Kill" Command="{Binding KillProcessCommand}"/>
-                        <MenuItem Header="Change Priority"/>
+                        <MenuItem Header="Change Priority" Command="{Binding ChangePriorityCommand}"/>
                     </ContextMenu>
                 </ListView.ContextMenu>
                 <ListView.View>

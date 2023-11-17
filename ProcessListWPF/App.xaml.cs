@@ -4,6 +4,8 @@ using ProcessListWPF.Services;
 using ProcessListWPF.ViewModels;
 using ProcessListWPF.ViewModels.Home;
 using ProcessListWPF.Views;
+using ProcessListWPF.Views.Shared;
+using System;
 using System.Windows;
 
 namespace ProcessListWPF;
@@ -37,6 +39,10 @@ public partial class App : Application
             DataContext = s.GetRequiredService<MenuViewModel>()
         });
         services.AddSingleton<HomeView>();
+
+        services.AddTransient<ChangePriorityWindow>();
+        services.AddSingleton<Func<ChangePriorityWindow>>(s => () => s.GetRequiredService<ChangePriorityWindow>());
+
     }
 
     protected override async void OnStartup(StartupEventArgs e)
