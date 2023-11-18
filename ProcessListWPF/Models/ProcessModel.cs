@@ -93,6 +93,23 @@ public class ProcessModel
         }
     }
 
+    public bool ChangePriority(ProcessPriorityClass priority)
+    {
+        if (_process == null)
+            return false;
+
+        try
+        {
+            _process.PriorityClass = priority;
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+
+    }
+
     public override bool Equals(object? obj)
     {
         return obj is ProcessModel model &&

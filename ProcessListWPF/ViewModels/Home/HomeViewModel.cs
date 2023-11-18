@@ -94,11 +94,19 @@ public class HomeViewModel : ViewModelBase
 
     private void ChangeSelectedPriority()
     {
-        var priorityWindow = _changePriorityDialogFactory.Create();
-        var success = priorityWindow.ShowDialog();
-        if (success == false)
+        if (SelectedItem == null || SelectedItem.Model == null)
             return;
-        // TODO
+
+        var priorityWindow = _changePriorityDialogFactory.Create();
+        priorityWindow.SetDefaultPriority(SelectedItem.Model.Priority);
+        var success = priorityWindow.ShowDialog();
+        if (success == false) return;
+
+        var chosenPriority = priorityWindow.ChosenPriority;
+        var changedSuccessfully = SelectedItem.Model.ChangePriority(chosenPriority);
+        if (!changedSuccessfully)
+            MessageBox.Show("Failed to change priority.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
     }
 
     private void KillSelectedProcess()

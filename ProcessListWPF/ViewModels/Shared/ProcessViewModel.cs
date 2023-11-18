@@ -17,7 +17,7 @@ public class ProcessViewModel : ViewModelBase
 
     public int Id { get => _id; set { _id = value; OnPropertyChanged(); } }
     public string Name { get => _name; set { _name = value; OnPropertyChanged(); } }
-    public int Priority { get => _priority; set { _priority = value; OnPropertyChanged(); } }
+    public int Priority { get => _priority; set { _priority = value; OnPropertyChanged(); OnPropertyChanged(nameof(PriorityFormatted)); } }
     public string PriorityFormatted => GetFormattedPriority();
     public double Memory { get => _memory; set { _memory = value; OnPropertyChanged(); OnPropertyChanged(nameof(MemoryFormatted)); } }
     public string MemoryFormatted => $"{Memory:0.0} MB";

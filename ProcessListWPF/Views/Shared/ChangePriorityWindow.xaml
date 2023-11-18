@@ -5,16 +5,59 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProcessListWPF.Views.Shared"
         mc:Ignorable="d"
-        Title="Change Priority" Height="180" Width="260">
+        Title="Change Priority" Height="140" Width="200"
+        ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Label Content="Change priority"/>
+        <Label Grid.Row="1"
+               Grid.Column="1"
+               Content="Change priority:"
+               HorizontalContentAlignment="Center"/>
+        <ComboBox x:Name="PriorityComboBox"
+                  Grid.Row="2"
+                  Grid.Column="1"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Padding="8, 6"
+                  Margin="5"
+                  Width="110">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock 
+                        Text="{Binding PriorityString}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
 
+        <StackPanel 
+            Grid.Row="3" Grid.Column="1"
+            Orientation="Horizontal">
+            <StackPanel.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Width" Value="60"/>
+                    <Setter Property="Padding" Value="0, 4"/>
+                    <Setter Property="Margin" Value="3, 0"/>
+                </Style>
+            </StackPanel.Resources>
+            <Button x:Name="CancelBtn"
+                    Content="Cancel"
+                    Click="CancelBtn_Click"/>
+            <Button x:Name="OkBtn"
+                    Content="OK"
+                    Click="OkBtn_Click"/>
+        </StackPanel>
+        
     </Grid>
 </Window>
