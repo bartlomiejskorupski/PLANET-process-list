@@ -18,9 +18,6 @@
         <MenuItem Header="File" AllowDrop="True">
             <MenuItem Header="Exit" Command="{Binding ExitCommand}"/>
         </MenuItem>
-        <MenuItem Header="Options" AllowDrop="True">
-            <MenuItem/>
-        </MenuItem>
         <MenuItem Header="View" AllowDrop="True">
             <MenuItem Header="Refresh Now" Command="{Binding RefreshCommand}"/>
             <MenuItem Header="Refresh Speed" AllowDrop="True">

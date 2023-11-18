@@ -105,7 +105,7 @@ public class HomeViewModel : ViewModelBase
         var chosenPriority = priorityWindow.ChosenPriority;
         var changedSuccessfully = SelectedItem.Model.ChangePriority(chosenPriority);
         if (!changedSuccessfully)
-            MessageBox.Show("Failed to change priority.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("Failed to change priority.\nAccess denied.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 
     }
 
@@ -117,9 +117,9 @@ public class HomeViewModel : ViewModelBase
         {
             Process.GetProcessById(_selectedItem.Id).Kill();
         }
-        catch (Exception ex)
+        catch
         {
-            MessageBox.Show(ex.Message, ex.GetType().Name);
+            MessageBox.Show("Failed to kill process.\nAccess denied.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 
