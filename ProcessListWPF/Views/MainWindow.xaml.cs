@@ -1,5 +1,4 @@
-﻿using ProcessListWPF.ViewModels;
-using System.Windows;
+﻿using System.Windows;
 
 namespace ProcessListWPF;
 
